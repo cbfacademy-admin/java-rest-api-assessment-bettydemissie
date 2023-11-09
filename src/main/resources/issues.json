@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "title": "Bug in Application",
+        "description": "Application crashes on startup",
+        "status": "PENDING",
+        "assignedTo": {
+            "id": 1,
+            "firstname": "John",
+            "lastname": "Doe",
+            "email": "johndoe@example.com",
+            "department": "GROUP_FUNCTIONS"
+        },
+        "createdBy": {
+            "id": 2,
+            "firstname": "Alice",
+            "lastname": "Smith",
+            "email": "alicesmith@example.com",
+            "department": "GROUP_FUNCTIONS"
+        }
+    }
+]

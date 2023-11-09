@@ -176,7 +176,7 @@ You should see console output similar to the following (press `Ctrl + C` to exit
 2023-10-03T17:17:34.911+01:00  INFO 35536 --- [  restartedMain] com.cbfacademy.apiassessment.App         : Started App in 0.643 seconds (process running for 0.786)
 ```
 
-Open your browser and navigate to `http://localhost:8080`.
+Open your browser and navigate to `htgittp://localhost:8080`.
 
 ## **Deliverables**
 

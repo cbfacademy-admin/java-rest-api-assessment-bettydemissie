@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "firstname": "John",
+        "lastname": "Doe",
+        "email": "johndoe@example.com",
+        "department": "GROUP_FUNCTIONS"
+    },
+    {
+        "id": 2,
+        "firstname": "Alice",
+        "lastname": "Smith",
+        "email": "alicesmith@example.com",
+        "department": "GROUP_FUNCTIONS"
+    }
+]
