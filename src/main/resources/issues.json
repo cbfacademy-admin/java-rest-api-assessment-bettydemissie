@@ -18,5 +18,46 @@
             "email": "alicesmith@example.com",
             "department": "GROUP_FUNCTIONS"
         }
+    },
+    {
+        "id": 2,
+        "title": "Feature Request",
+        "description": "Add a new feature to the application",
+        "status": "IN_PROGRESS",
+        "assignedTo": {
+            "id": 3,
+            "firstname": "Bob",
+            "lastname": "Johnson",
+            "email": "bobjohnson@example.com",
+            "department": "GROUP_FUNCTIONS"
+        },
+        "createdBy": {
+            "id": 4,
+            "firstname": "Charlie",
+            "lastname": "Brown",
+            "email": "charliebrown@example.com",
+            "department": "INVESTMENT_BANKING"
+        }
+    },
+    {
+        "id": 3,
+        "title": "Data Import Issue",
+        "description": "Unable to import data into the system",
+        "status": "COMPLETE",
+        "assignedTo": {
+            "id": 5,
+            "firstname": "Eva",
+            "lastname": "Williams",
+            "email": "evawilliams@example.com",
+            "department": "ASSET_MANAGEMENT"
+        },
+        "createdBy": {
+            "id": 6,
+            "firstname": "David",
+            "lastname": "Miller",
+            "email": "davidmiller@example.com",
+            "department": "WEALTH_MANAGEMENT"
+        }
     }
 ]
+

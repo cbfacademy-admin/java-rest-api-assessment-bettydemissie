@@ -1,9 +1,8 @@
-package com.cbfacademy.apiassessment.entities;
+package com.cbfacademy.apiassessment.model.entities;
 
-import com.cbfacademy.apiassessment.enums.Status;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.type.CollectionType;
+import java.util.List;
+
+import com.cbfacademy.apiassessment.model.enums.Status;
 
 public class Issue {
 
@@ -25,6 +24,15 @@ public class Issue {
         this.createdBy = createdBy;
     }
 
+    public Issue() {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.assignedTo = assignedTo;
+        this.createdBy = createdBy;
+    }
+    
     // Getters and Setters
     public long getId() {
         return id;
@@ -85,6 +93,5 @@ public class Issue {
                 ", createdBy=" + createdBy +
                 '}';
     }
-
 
 }

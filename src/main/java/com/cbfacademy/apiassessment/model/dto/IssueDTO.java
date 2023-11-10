@@ -1,4 +1,4 @@
-package com.cbfacademy.apiassessment.dto;
+package com.cbfacademy.apiassessment.model.dto;
 
 public class IssueDTO {
 

@@ -1,4 +1,5 @@
-[
+{
+    "employees": [
     {
         "id": 1,
         "firstname": "John",
@@ -13,4 +14,5 @@
         "email": "alicesmith@example.com",
         "department": "GROUP_FUNCTIONS"
     }
-]
+    ]       
+}

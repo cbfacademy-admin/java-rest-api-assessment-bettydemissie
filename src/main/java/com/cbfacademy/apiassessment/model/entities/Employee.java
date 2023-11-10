@@ -1,6 +1,6 @@
-package com.cbfacademy.apiassessment.entities;
+package com.cbfacademy.apiassessment.model.entities;
 
-import com.cbfacademy.apiassessment.enums.Department;
+import com.cbfacademy.apiassessment.model.enums.Department;
 
 public class Employee {
 
@@ -61,7 +61,6 @@ public class Employee {
     }
 
     @Override
-
     public String toString() {
         return "Employee{" +
         "id=" + id +
