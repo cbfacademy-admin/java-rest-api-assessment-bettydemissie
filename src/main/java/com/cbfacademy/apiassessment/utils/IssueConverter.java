@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class IssueConverter {
+public class IssueConverter implements JsonConverter<Issue> {
 
-    public static List<Issue> readJsonFile(String filePath) {
+    @Override
+    public List<Issue> readJsonFile(String filePath) {
         try (FileReader reader = new FileReader(filePath)) {
             // Define the type of the collection you want to deserialize
             Type listType = new TypeToken<List<Issue>>() {}.getType();
@@ -25,8 +26,9 @@ public class IssueConverter {
             return null;
         }
     }
-
-    public static boolean writeJsonFile( List<Issue> issues) {
+    
+    @Override
+    public boolean writeJsonFile( List<Issue> issues, String fileName ) {
         boolean status = false;
         try (FileWriter writer = new FileWriter("issues.json")) {
             // Serialize the list of Issue objects to JSON and write to the file
@@ -40,5 +42,10 @@ public class IssueConverter {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public void ReadandWrite(String inputFile, String outputFile) {
+        
+
     }
 }

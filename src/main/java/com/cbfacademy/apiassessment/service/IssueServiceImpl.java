@@ -54,7 +54,7 @@ public class IssueServiceImpl implements IssueService {
                 existingIssue.setStatus(updatedIssue.getStatus());
 
                 // Write the updated list back to the JSON file
-                if (issueConverter.writeJsonFile(issues)) {
+                if (issueConverter.writeJsonFile(issues, "issues.json")) {
                     // Return the updated issue
                     return existingIssue;
                 } else {

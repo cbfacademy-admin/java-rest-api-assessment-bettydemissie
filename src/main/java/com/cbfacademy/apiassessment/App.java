@@ -3,11 +3,15 @@ package com.cbfacademy.apiassessment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.model.entities.Issue;
+import com.cbfacademy.apiassessment.model.enums.Department;
+import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.utils.IssueConverter;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -15,7 +19,7 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(App.class, args);
+        //SpringApplication.run(App.class, args);
 		String filePath = "src/main/resources/issues.json";
 
 		IssueConverter issueConverter = new IssueConverter();
@@ -29,5 +33,17 @@ public class App {
 				System.out.println(issue);
 			}
 		}
+
+
+	// Create instances of Employee
+	Employee assignedEmployee = new Employee(5, "John", "Doe", "john@example.com", Department.GROUP_FUNCTIONS);
+	Employee createdEmployee = new Employee(6, "Jane", "Doe", "jane@example.com", Department.ASSET_MANAGEMENT);
+
+	// Create instances of Issue with assigned and created employees
+	List<Issue> issuesToWrite = new ArrayList<>();
+	issuesToWrite.add(new Issue(1, "IT Issue", "Computer Failure", Status.PENDING, assignedEmployee, createdEmployee));
+
+	var writeIssue = issueConverter.writeJsonFile(issuesToWrite, filePath); 
+
     }
 }

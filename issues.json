@@ -1,0 +1,1 @@
+[{"id":1,"title":"IT Issue","description":"Computer Failure","status":"PENDING","assignedTo":{"id":5,"firstname":"John","lastname":"Doe","email":"john@example.com","department":"GROUP_FUNCTIONS"},"createdBy":{"id":6,"firstname":"Jane","lastname":"Doe","email":"jane@example.com","department":"ASSET_MANAGEMENT"}}]

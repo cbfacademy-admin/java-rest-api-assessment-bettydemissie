@@ -10,12 +10,12 @@ public class Issue {
     private String title;
     private String description;
     private Status status;
-    private Employee assignedTo;
-    private Employee createdBy;
+    private List<String> assignedTo;
+    private List<String> createdBy;
 
-    // Constructor
-    public Issue(long id, String title, String description, Status status, Employee assignedTo,
-            Employee createdBy) {
+    // Constructors
+    public Issue(long id, String title, String description, Status status, List<String> assignedTo,
+            List<String> createdBy) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -32,7 +32,7 @@ public class Issue {
         this.assignedTo = assignedTo;
         this.createdBy = createdBy;
     }
-    
+
     // Getters and Setters
     public long getId() {
         return id;
@@ -66,19 +66,19 @@ public class Issue {
         this.status = status;
     }
 
-    public Employee getAssignedTo() {
+    public List<String> getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(Employee assignedTo) {
+    public void setAssignedTo(List<String> assignedTo) {
         this.assignedTo = assignedTo;
     }
 
-    public Employee getCreatedBy() {
+    public List<String> getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Employee createdBy) {
+    public void setCreatedBy(List<String> createdBy) {
         this.createdBy = createdBy;
     }
 
