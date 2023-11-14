@@ -44,8 +44,18 @@ public class IssueConverter implements JsonConverter<Issue> {
         return status;
     }
 
+    @Override
     public void ReadandWrite(String inputFile, String outputFile) {
-        
+        // Read issues from the input file
+        List<Issue> issues = readJsonFile(inputFile);
 
+        if (issues != null) {
+            // Modify the issues or perform any necessary operations
+
+            // Write the modified issues to the output file
+            writeJsonFile(issues, outputFile);
+        } else {
+            System.out.println("Error reading the input file.");
+        }
     }
 }

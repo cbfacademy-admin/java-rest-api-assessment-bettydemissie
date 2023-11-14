@@ -32,8 +32,8 @@ public class IssueController {
     }
 
     @GetMapping("/issue/all")
-    public List<Issue> fetchAllIssues() {
-        return issueService.fetchAllIssues();
+    public List<Issue> getAllIssues() {
+        return issueService.getAllIssues();
     }
     
     @GetMapping("/issue/[id]")

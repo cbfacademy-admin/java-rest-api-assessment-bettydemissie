@@ -2,6 +2,8 @@ package com.cbfacademy.apiassessment.service;
 
 import java.util.List;
 
+import com.cbfacademy.apiassessment.repository.IssueRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cbfacademy.apiassessment.model.entities.Issue;
@@ -10,18 +12,24 @@ import com.cbfacademy.apiassessment.utils.IssueConverter;
 @Service
 public class IssueServiceImpl implements IssueService {
 
-    IssueConverter issueConverter = new IssueConverter();
-    String filePath = "src/main/resources/issues.json";
+    private final IssueRepository issueRepository;
+    private final IssueConverter issueConverter = new IssueConverter();
+    private final String filePath = "src/main/resources/issues.json";
+
+    @Autowired
+    public IssueServiceImpl(IssueRepository issueRepository) {
+        this.issueRepository = issueRepository;
+    }
+
+    @Override
+    public List<Issue> getAllIssues() {
+        return issueRepository.getAllIssues();
+    }
+
     @Override
     public Issue addIssue(Issue issue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addIssue'");
-    }
-
-    @Override
-    public List<Issue> fetchAllIssues() {
-        List<Issue> issues = issueConverter.readJsonFile(filePath);
-        return issues;
     }
 
     @Override

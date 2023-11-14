@@ -34,4 +34,18 @@ public class EmployeeConverter implements JsonConverter<Employee> {
             return false;
         }
     }
+
+    public void ReadandWrite(String inputFile, String outputFile) {
+        // Read issues from the input file
+        List<Employee> employees = readJsonFile(inputFile);
+
+        if (employees != null) {
+            // Modify the issues or perform any necessary operations
+
+            // Write the modified issues to the output file
+            writeJsonFile(employees, outputFile);
+        } else {
+            System.out.println("Error reading the input file.");
+        }
+    }
 }

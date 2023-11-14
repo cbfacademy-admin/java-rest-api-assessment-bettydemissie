@@ -7,4 +7,6 @@ public interface JsonConverter<T> {
 
     boolean writeJsonFile(List<T> items, String filePath);
 
+    void ReadandWrite(String inputFile, String outputFile);
+
 }

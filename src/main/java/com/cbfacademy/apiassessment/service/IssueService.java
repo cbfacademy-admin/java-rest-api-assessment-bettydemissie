@@ -12,7 +12,7 @@ public interface IssueService {
 
     public Issue addIssue(Issue issue);
 
-    public List<Issue> fetchAllIssues();
+    public List<Issue> getAllIssues();
 
     public Issue fetchIssueDetails(String id);
 

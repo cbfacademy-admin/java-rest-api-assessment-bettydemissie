@@ -43,7 +43,7 @@ public class App {
 	List<Issue> issuesToWrite = new ArrayList<>();
 	issuesToWrite.add(new Issue(1, "IT Issue", "Computer Failure", Status.PENDING, assignedEmployee, createdEmployee));
 
-	var writeIssue = issueConverter.writeJsonFile(issuesToWrite, filePath); 
+	var writeIssue = issueConverter.writeJsonFile(issuesToWrite, filePath);
 
     }
 }
