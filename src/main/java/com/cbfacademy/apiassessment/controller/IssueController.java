@@ -3,6 +3,7 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cbfacademy.apiassessment.service.IssueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +20,10 @@ import com.cbfacademy.apiassessment.service.IssueService;
 @RequestMapping("/api/v1/issues")
 public class IssueController {
     //getmapping
-    private final IssueService issueService;
+    private final IssueServiceImpl issueService;
 
     @Autowired
-    public IssueController(IssueService issueService) {
+    public IssueController(IssueServiceImpl issueService) {
         this.issueService = issueService;
     }
 

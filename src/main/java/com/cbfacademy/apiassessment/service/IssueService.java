@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.cbfacademy.apiassessment.model.entities.Issue;
 
+@Service
 public interface IssueService {
     //crud functions are implemented in the repository
     //calls the repository to create, read, update and delete issues

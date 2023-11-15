@@ -18,17 +18,18 @@ public interface IssueMapper {
 
     IssueMapper INSTANCE = Mappers.getMapper(IssueMapper.class);
 
-    @Mapping(source = "assignedTo", target = "assignedTo", qualifiedByName = "mapToEmployeeDTO")
-    @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "mapToEmployeeDTO")
+    @Mapping(source = "assignedTo", target = "assignedTo", qualifiedByName = "map")
+    @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "map")
     IssueDTO mapToIssueDTO(Issue issue);
 
     List<IssueDTO> mapToIssueDTOList(List<Issue> issues);
 
-    @Mapping(source = "assignedTo", target = "assignedTo")
-    @Mapping(source = "createdBy", target = "createdBy")
+    @Named("map")
     EmployeeDTO mapToEmployeeDTO(Employee employee);
 
     List<EmployeeDTO> mapToEmployeeDTOList(List<Employee> employees);
+
 }
+
 
 
