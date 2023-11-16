@@ -25,10 +25,10 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue addIssue(Issue issue) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addIssue'");
+    public Issue addIssue(Issue issue) { return issueRepository.addIssue(issue);
+
     }
+
 
     @Override
     public Issue fetchIssueDetails(String id) {

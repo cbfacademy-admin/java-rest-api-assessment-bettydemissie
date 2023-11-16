@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     @TestInstance(Lifecycle.PER_CLASS)
     public class TestSuite {
 
-        private final IssueMapper issueMapper = Mappers.getMapper(IssueMapper.class);
+
 
         @Test
         public void testMapToIssueDTO() {
@@ -28,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             Issue issue = new Issue(1L, "Sample Issue", "Description", Status.PENDING,
                     new Employee(123456789, "john", "life", "john.doe@example.com", Department.WEALTH_MANAGEMENT),
                     new Employee(12345678, "john", "death", "john.doe@example.com", Department.ASSET_MANAGEMENT));
+
+            IssueMapper issueMapper = Mappers.getMapper(IssueMapper.class);
 
             // Map the Issue to IssueDTO
             IssueDTO issueDTO = issueMapper.mapToIssueDTO(issue);
@@ -54,6 +56,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
                             new Employee(123456789, "dn", "ld", "john.doe@example.co", Department.ASSET_MANAGEMENT))
             );
 
+            IssueMapper issueMapper = Mappers.getMapper(IssueMapper.class);
 
             // Map the list of Issues to a list of IssueDTOs
             List<IssueDTO> issueDTOList = issueMapper.mapToIssueDTOList(issues);
@@ -62,10 +65,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             assertNotNull(issueDTOList);
             assertEquals(issues.size(), issueDTOList.size());
 
-            // Add more specific assertions based on your mapping logic
         }
-
-        // Add more test methods as needed
     }
 
 

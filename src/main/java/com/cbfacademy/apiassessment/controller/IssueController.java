@@ -3,6 +3,8 @@ package com.cbfacademy.apiassessment.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cbfacademy.apiassessment.model.dto.IssueDTO;
+import com.cbfacademy.apiassessment.service.EmployeeService;
 import com.cbfacademy.apiassessment.service.IssueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,26 +20,29 @@ import com.cbfacademy.apiassessment.service.IssueService;
 
 @RestController
 @RequestMapping("/api/v1/issues")
-public class IssueController {
-    //getmapping
+//appcontroller
+public class IssueController{
     private final IssueServiceImpl issueService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public IssueController(IssueServiceImpl issueService) {
+    public IssueController(IssueServiceImpl issueService, EmployeeService employeeService) {
         this.issueService = issueService;
+        this.employeeService = employeeService; //separate
     }
 
     @PostMapping("/issue")
     public Issue addIssue(@RequestBody Issue issue) {
+        System.out.println(issue); //reove
         return issueService.addIssue(issue);
-    }
 
+    }
     @GetMapping("/issue/all")
     public List<Issue> getAllIssues() {
         return issueService.getAllIssues();
     }
     
-    @GetMapping("/issue/[id]")
+    @GetMapping("/issue/{id}")
     public Issue fetchIssueDetails(@PathVariable String id) {
         return issueService.fetchIssueDetails(id);
     }
@@ -46,5 +51,4 @@ public class IssueController {
     public Issue updateIssue(@RequestBody Issue issue) {
         return issueService.updateIssue(issue);
     }
-
 }

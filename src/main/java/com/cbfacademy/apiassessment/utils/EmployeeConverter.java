@@ -3,13 +3,14 @@ package com.cbfacademy.apiassessment.utils;
 import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
-
+@Component
 public class EmployeeConverter implements JsonConverter<Employee> {
 
     @Override

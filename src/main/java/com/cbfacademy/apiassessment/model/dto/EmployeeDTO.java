@@ -8,8 +8,6 @@ public class EmployeeDTO {
     private String lastname;
     private String email;
     private Department department;
-
-    // Constructors
     public EmployeeDTO() {
     }
 

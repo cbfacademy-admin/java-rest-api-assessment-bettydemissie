@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment;
 
+import com.cbfacademy.apiassessment.repository.IssueRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -19,10 +20,10 @@ import java.util.List;
 public class App {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(App.class, args);
-//		String filePath = "src/main/resources/issues.json";
-//
-//		IssueConverter issueConverter = new IssueConverter();
-//
+		String filePath = "src/main/resources/issues.json";
+
+		IssueConverter issueConverter = new IssueConverter();
+
 //		// Read the JSON file and get a list of Issue objects
 //		List<Issue> issues = issueConverter.readJsonFile(filePath);
 //
@@ -32,6 +33,14 @@ public class App {
 //				System.out.println(issue);
 //			}
 //		}
+
+//        IssueRepository issueRepository = new IssueRepository(filePath);
+//
+//        List<Issue> issuesList = issueRepository.getAllIssues();
+//
+//        for (Issue issue : issuesList) {
+//            System.out.println(issue);
+//        }
 //
 //
 //	// Create instances of Employee
