@@ -6,7 +6,7 @@ import com.cbfacademy.apiassessment.model.enums.Status;
 
 public class Issue {
 
-    private long id;
+    private Long id;
     private String title;
     private String description;
     private Status status;
@@ -14,7 +14,7 @@ public class Issue {
     private Employee createdBy;
 
     // Constructors
-    public Issue(long id, String title, String description, Status status, Employee assignedTo,
+    public Issue(Long id, String title, String description, Status status, Employee assignedTo,
             Employee createdBy) {
         this.id = id;
         this.title = title;
@@ -34,11 +34,11 @@ public class Issue {
     }
 
     // Getters and Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

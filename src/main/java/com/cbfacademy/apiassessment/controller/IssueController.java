@@ -7,13 +7,7 @@ import com.cbfacademy.apiassessment.model.dto.IssueDTO;
 import com.cbfacademy.apiassessment.service.EmployeeService;
 import com.cbfacademy.apiassessment.service.IssueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cbfacademy.apiassessment.model.entities.Issue;
 import com.cbfacademy.apiassessment.service.IssueService;
@@ -31,24 +25,35 @@ public class IssueController{
         this.employeeService = employeeService; //separate
     }
 
-    @PostMapping("/issue")
-    public Issue addIssue(@RequestBody Issue issue) {
-        System.out.println(issue); //reove
-        return issueService.addIssue(issue);
-
+    @PostMapping("/add")
+    public void addIssue(@RequestBody Issue issue) {
+        issueService.addIssue(issue);
     }
-    @GetMapping("/issue/all")
+
+    @GetMapping("/all")
     public List<Issue> getAllIssues() {
         return issueService.getAllIssues();
     }
     
-    @GetMapping("/issue/{id}")
-    public Issue fetchIssueDetails(@PathVariable String id) {
-        return issueService.fetchIssueDetails(id);
+    @GetMapping("/fetch/{issueId}")
+    public Issue fetchIssueDetails(@PathVariable Long issueId) {
+        return issueService.fetchIssueDetails(issueId);
     }
 
-    @PutMapping("/issue")
-    public Issue updateIssue(@RequestBody Issue issue) {
-        return issueService.updateIssue(issue);
+    @PutMapping("/update/{issueId}")
+    public void updateIssueByEmployee(@PathVariable Long issueId,
+                                      @RequestParam Long employeeId) {
+        issueService.updateIssueByEmployee(issueId, employeeId);
+    }
+
+    @PutMapping("/update/status/{issueId}")
+    public void updateIssueByStatus(@PathVariable Long issueId,
+                                    @RequestParam String status) {
+        issueService.updateIssueByStatus(issueId, status);
+    }
+
+    @PutMapping("/void/{issueId}")
+    public void deleteIssue(@PathVariable Long issueId) {
+        issueService.deleteIssue(issueId);
     }
 }

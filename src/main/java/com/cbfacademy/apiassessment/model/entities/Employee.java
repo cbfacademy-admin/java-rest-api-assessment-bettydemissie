@@ -4,7 +4,7 @@ import com.cbfacademy.apiassessment.model.enums.Department;
 
 public class Employee {
 
-    private long id;
+    private Long id;
     private String firstname;
     private String lastname;
     private String email;
@@ -20,7 +20,7 @@ public class Employee {
     }
 
     // Getters and Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

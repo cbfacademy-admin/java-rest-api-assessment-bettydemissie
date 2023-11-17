@@ -22,7 +22,7 @@ public class EmployeeService {
         return employeeRepository.getAllEmployees();
     }
 
-    public Employee getEmployeeByID(int ID) {
+    public Employee getEmployeeByID(Long ID) {
         return employeeRepository.getEmployeeByID(ID);
     }
 

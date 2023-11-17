@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.cbfacademy.apiassessment.model.entities.Issue;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public interface IssueService {
@@ -11,12 +12,16 @@ public interface IssueService {
     //calls the repository to create, read, update and delete issues
     //logic from repository this is where checks are done to see if the data being given from user is valid for database
 
-    public Issue addIssue(Issue issue);
+    void addIssue(Issue issue);
 
-    public List<Issue> getAllIssues();
+    List<Issue> getAllIssues();
 
-    public Issue fetchIssueDetails(String id);
+    Issue fetchIssueDetails(Long id);
 
-    public Issue updateIssue(Issue issue);
+    void updateIssueByStatus(Long issueId, String status);
+
+    void deleteIssue(@RequestBody Long issueId);
+
+    void updateIssueByEmployee(Long issueId, Long employeeId);
 
 }

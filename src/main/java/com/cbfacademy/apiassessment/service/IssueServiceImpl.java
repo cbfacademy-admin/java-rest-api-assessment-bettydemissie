@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.cbfacademy.apiassessment.repository.IssueRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cbfacademy.apiassessment.model.entities.Issue;
 import com.cbfacademy.apiassessment.utils.IssueConverter;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class IssueServiceImpl implements IssueService {
@@ -25,55 +27,46 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue addIssue(Issue issue) { return issueRepository.addIssue(issue);
-
+    public void addIssue(Issue issue) { issueRepository.addIssue(issue);
     }
-
 
     @Override
-    public Issue fetchIssueDetails(String id) {
-//        try {
-//            // Assuming you have filePath and issueConverter defined somewhere
-//            List<Issue> issues = issueConverter.readJsonFile(filePath);
-//
-//            // Use parallelStream() to filter issues based on ID
-//            Issue issue = issues.parallelStream()
-//                    .filter(iss -> String.valueOf(iss.getId()).equals(id))
-//                    .findAny()
-//                    .orElse(null);
-//
-//            return issue;
-//        } catch (Exception e) {
-//            e.printStackTrace(); // Handle the exception according to your application's requirements
-//            return null;
-//        }
-        return null;
+    public Issue fetchIssueDetails(Long id) {
+        try {
+            return issueRepository.fetchIssueDetails(id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    
+
+    public void updateIssueByStatus(Long issueId, String status) {
+        try {
+            issueRepository.updateIssueByStatus(issueId, status);
+        } catch (IOException e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public Issue updateIssue(Issue updatedIssue) {
-//        List<Issue> issues = issueConverter.readJsonFile(filePath);
-//
-//        // Find the issue with the matching ID
-//        for (Issue existingIssue : issues) {
-//            if (existingIssue.getId() == updatedIssue.getId()) {
-//                // Update the status of the existing issue
-//                existingIssue.setStatus(updatedIssue.getStatus());
-//
-//                // Write the updated list back to the JSON file
-//                if (issueConverter.writeJsonFile(issues, "issues.json")) {
-//                    // Return the updated issue
-//                    return existingIssue;
-//                } else {
-//                    // Handle the case where writing to the file fails
-//                    throw new RuntimeException("Failed to update issue status in the JSON file.");
-//                }
-//            }
-//        }
-
-        // If no matching issue is found, return null or throw an exception, depending
-        // on your requirements
-        return null;
+    public void updateIssueByEmployee(Long issueId, Long employeeId) {
+        try {
+            issueRepository.updateIssueByEmployee(issueId, employeeId);
+        } catch (IOException e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace();
+        }
     }
 
+    @Override
+    public void deleteIssue(Long issueId) {
+        try {
+            issueRepository.deleteIssue(issueId);
+        } catch (IOException e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace();
+        }
+    }
 }

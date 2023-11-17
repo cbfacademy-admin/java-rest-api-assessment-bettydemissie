@@ -3,7 +3,7 @@ package com.cbfacademy.apiassessment.model.dto;
 import com.cbfacademy.apiassessment.model.enums.Department;
 
 public class EmployeeDTO {
-    private long id;
+    private Long id;
     private String firstname;
     private String lastname;
     private String email;
@@ -11,7 +11,7 @@ public class EmployeeDTO {
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(long id, String firstname, String lastname, String email, Department department) {
+    public EmployeeDTO(Long id, String firstname, String lastname, String email, Department department) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -19,11 +19,11 @@ public class EmployeeDTO {
         this.department = department;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
