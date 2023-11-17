@@ -10,12 +10,12 @@ import java.util.List;
 
 @Repository
 public class EmployeeRepository {
-    private String filePath = "src/main/resources/employees.json";
+    private String filePath = "src/main/resources/employee.json";
 
     @Autowired
     private EmployeeConverter employeeConverter;
 
-    public EmployeeRepository(@Value("src/main/resources/employees.json") String filePath) {
+    public EmployeeRepository(@Value("${file.path.employee}") String filePath) {
         this.filePath = filePath;
     }
 
@@ -23,12 +23,12 @@ public class EmployeeRepository {
         return employeeConverter.readJsonFile(filePath);
     }
 
-    public Employee getEmployeeByID(Long ID) {
+    public Employee getEmployeeById(Long ID) {
 
         List<Employee> employees = getAllEmployees();
         // Use stream and filter to find the employee by ID
         return employees.stream()
-                .filter(employee -> employee.getId() == ID)
+                .filter(employee -> employee.getId().equals(ID))
                 .findFirst()
                 .orElse(null);
     }

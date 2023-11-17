@@ -1,26 +1,23 @@
 package com.cbfacademy.apiassessment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.cbfacademy.apiassessment.model.dto.IssueDTO;
 import com.cbfacademy.apiassessment.service.EmployeeService;
-import com.cbfacademy.apiassessment.service.IssueServiceImpl;
+import com.cbfacademy.apiassessment.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.cbfacademy.apiassessment.model.entities.Issue;
-import com.cbfacademy.apiassessment.service.IssueService;
 
 @RestController
 @RequestMapping("/api/v1/issues")
 //appcontroller
 public class IssueController{
-    private final IssueServiceImpl issueService;
+    private final IssueService issueService;
     private final EmployeeService employeeService;
 
     @Autowired
-    public IssueController(IssueServiceImpl issueService, EmployeeService employeeService) {
+    public IssueController(IssueService issueService, EmployeeService employeeService) {
         this.issueService = issueService;
         this.employeeService = employeeService; //separate
     }

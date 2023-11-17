@@ -22,10 +22,9 @@ public class EmployeeService {
         return employeeRepository.getAllEmployees();
     }
 
-    public Employee getEmployeeByID(Long ID) {
-        return employeeRepository.getEmployeeByID(ID);
+    public Employee getEmployeeById(Long ID) {
+        return employeeRepository.getEmployeeById(ID);
     }
-
 
     public Employee addEmployee(Employee employee) {
         return employeeRepository.addEmployee(employee);

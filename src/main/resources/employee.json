@@ -12,7 +12,62 @@
         "lastname": "Smith",
         "email": "alicesmith@example.com",
         "department": "GROUP_FUNCTIONS"
+    },
+    {
+        "id": 3,
+        "firstname": "Bob",
+        "lastname": "Johnson",
+        "email": "bobjohnson@example.com",
+        "department": "GROUP_FUNCTIONS"
+    },
+    {
+        "id": 4,
+        "firstname": "Charlie",
+        "lastname": "Brown",
+        "email": "charliebrown@example.com",
+        "department": "INVESTMENT_BANKING"
+    },
+    {
+        "id": 5,
+        "firstname": "Eva",
+        "lastname": "Williams",
+        "email": "evawilliams@example.com",
+        "department": "ASSET_MANAGEMENT"
+    },
+    {
+        "id": 6,
+        "firstname": "David",
+        "lastname": "Miller",
+        "email": "davidmiller@example.com",
+        "department": "WEALTH_MANAGEMENT"
+    },
+    {
+        "id": 7,
+        "firstname": "Sofie",
+        "lastname": "Pardon",
+        "email": "spar@example.com",
+        "department": "PRIVATE_CORPORATE"
+    },
+    {
+        "id": 8,
+        "firstname": "Paula",
+        "lastname": "Simons",
+        "email": "paulas@example.com",
+        "department": "PRIVATE_CORPORATE"
+    },
+    {
+        "id": 9,
+        "firstname": "Betty",
+        "lastname": "Demissie",
+        "email": "bethel@example.com",
+        "department": "WEALTH_MANAGEMENT"
+    },
+    {
+        "id": 10,
+        "firstname": "Devin",
+        "lastname": "Within",
+        "email": "dwithin@example.com",
+        "department": "ASSET_MANAGEMENT"
     }
-
 ]
 
