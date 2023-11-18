@@ -9,6 +9,9 @@ import com.cbfacademy.apiassessment.utils.IssueConverter;
 import com.cbfacademy.apiassessment.model.enums.Status;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +125,7 @@ public class IssueRepository {
         for (Issue issue : issues) {
             if (issue.getId().equals(issueId)) {
                 // Update the assignedTo field with the new employeeId
-                issue.setAssignedTo(employeeRepository.getEmployeeByID(employeeId));
+                issue.setAssignedTo(employeeRepository.getEmployeeById(employeeId));
 
                 // Write the updated list of issues back to the file
                 saveIssue(issues, filePath);
@@ -181,6 +184,55 @@ public class IssueRepository {
         // Write the list of issues to the file
         issueConverter.writeJsonFile(issues, filePath);
 
+    }
+    public List<Issue> getIssuesByStatus(Status status) {
+        try {
+            // Ensure the issues are sorted by status
+            List<Issue> sortedIssues = getAllIssues();
+            Collections.sort(sortedIssues, Comparator.comparing(Issue::getStatus));
+
+            // Perform binary search
+            int index = binarySearch(sortedIssues, status);
+
+            if (index != -1) {
+                // If the status is found, return the list of issues with that status
+                List<Issue> issuesWithStatus = new ArrayList<>();
+                for (int i = index; i >= 0 && sortedIssues.get(i).getStatus() == status; i--) {
+                    issuesWithStatus.add(sortedIssues.get(i));
+                }
+                for (int i = index + 1; i < sortedIssues.size() && sortedIssues.get(i).getStatus() == status; i++) {
+                    issuesWithStatus.add(sortedIssues.get(i));
+                }
+                return issuesWithStatus;
+            } else {
+                // If the status is not found, return an empty list or handle accordingly
+                return Collections.emptyList();
+            }
+        } catch (Exception e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    private int binarySearch(List<Issue> issues, Status status) {
+        int low = 0;
+        int high = issues.size() - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            Status midStatus = issues.get(mid).getStatus();
+
+            if (midStatus == status) {
+                return mid; // Found the status
+            } else if (midStatus.compareTo(status) < 0) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
+        }
+
+        return -1; // Status not found
     }
 
 }

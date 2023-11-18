@@ -3,6 +3,7 @@ package com.cbfacademy.apiassessment.service;
 import java.io.IOException;
 import java.util.List;
 
+import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.repository.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,4 +71,9 @@ public class IssueService {
             e.printStackTrace();
         }
     }
+
+    public List<Issue> getIssuesByStatus(Status status) {
+        return issueRepository.getIssuesByStatus(status);
+    }
+
 }

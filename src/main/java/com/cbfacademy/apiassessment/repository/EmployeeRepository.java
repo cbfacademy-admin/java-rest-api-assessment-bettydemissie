@@ -42,7 +42,6 @@ public class EmployeeRepository {
             // Handle the error, for example, throw an exception or log a message
             throw new RuntimeException("Error reading existing employees from the file.");
         }
-
         // Add the new employee to the list
         employees.add(employee);
 
@@ -55,7 +54,6 @@ public class EmployeeRepository {
 
     public boolean checkEmployeeExist(Long employeeId) {
         List<Employee> employees = getAllEmployees();
-
         // Use stream API to check if the provided employeeId exists in any assignedTo field
         return employees.stream()
                 .anyMatch(employee -> employee.getId().equals(employeeId));

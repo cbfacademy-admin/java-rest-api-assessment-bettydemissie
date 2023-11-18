@@ -2,6 +2,7 @@ package com.cbfacademy.apiassessment.controller;
 
 import java.util.List;
 
+import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.service.EmployeeService;
 import com.cbfacademy.apiassessment.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,11 @@ public class IssueController{
     public void deleteIssue(@PathVariable Long issueId) {
         issueService.deleteIssue(issueId);
     }
+
+
+    @GetMapping("/status/{status}")
+    public List<Issue> getIssuesByStatus(@PathVariable String status) {
+        return issueService.getIssuesByStatus(Status.valueOf(status));
+    }
+
 }
