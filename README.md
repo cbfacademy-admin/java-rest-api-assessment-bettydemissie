@@ -79,6 +79,68 @@ PRIVATE_CORPORATE;
 
 Feel free to explore the API endpoints to create, retrieve, update, and delete issues, as well as manage employees involved in the resolution process.
 
+## End Points
+
+Here are all the endpoints to add to `htgittp://localhost:8081`:
+
+** Issue **
+Add a New Issue
+
+Endpoint: POST /api/v1/issues/add
+Description: Creates a new issue with the provided details.
+
+Get All Issues
+
+Endpoint: GET /api/v1/issues/all
+Description: Retrieves a list of all issues.
+
+Fetch Issue Details
+
+Endpoint: GET /api/v1/issues/fetch/{issueId}
+Description: Retrieves details of a specific issue based on its ID.
+
+Update Issues Assigned to Employee
+
+Endpoint: PUT /api/v1/issues/update/{issueId}
+Description: Updates the assigned employee for a specific issue.
+
+Update Issue Status
+
+Endpoint: PUT /api/v1/issues/update/status/{issueId}
+Description: Updates the status of a specific issue.
+
+Delete an Issue
+
+Endpoint: DELETE /api/v1/issues/void/{issueId}
+Description: Deletes a specific issue based on its ID.
+
+Get Issues by Status
+
+Endpoint: GET /api/v1/issues/status/{status}
+Description: Retrieves a list of issues based on their status.
+
+Get Issues Assigned to an Employee
+
+Endpoint: GET /api/v1/issues/{employeeId}
+Description: Retrieves a list of issues assigned to a specific employee.
+
+** Employee **
+
+Get All Employees
+
+Endpoint: GET /api/v1/employees/all
+Description: Retrieves a list of all employees.
+
+Get Employee by ID
+
+Endpoint: GET /api/v1/employees/{employeeId}
+Description: Retrieves details of a specific employee based on their ID.
+
+Add a New Employee
+
+Endpoint: POST /api/v1/employees/add
+Description: Creates a new employee with the provided details.
+
 ## Documentation
 While the application is running, you can explore the comprehensive documentation and operational endpoints at: 
 [Issue API Swagger Documentation] http://localhost:8081/swagger-ui/index.html#/
