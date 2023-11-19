@@ -138,5 +138,12 @@
     "lastname": "Turner",
     "email": "isabellat@example.com",
     "department": "WEALTH_MANAGEMENT"
+  },
+  {
+    "id": 21,
+    "firstname": "Sam",
+    "lastname": "Smith",
+    "email": "ssmith@example.com",
+    "department": "PRIVATE_CORPORATE"
   }
 ]

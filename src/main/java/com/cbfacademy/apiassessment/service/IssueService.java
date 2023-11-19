@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.repository.IssueRepository;
+import com.cbfacademy.apiassessment.utils.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,46 +22,52 @@ public class IssueService {
         this.issueRepository = issueRepository;
     }
 
+    private static final Logger log = LoggerFactory.getLogger(IssueService.class);
 
     public List<Issue> getAllIssues() {
-        return issueRepository.getAllIssues();
+        try {
+            return issueRepository.getAllIssues();
+        } catch (Exception e) {
+            // Log the error or handle it as appropriate for your application
+            throw new RuntimeException("Error getting all issues.", e);
+        }
     }
-
 
     public void addIssue(Issue issue) {
         try {
             issueRepository.addIssue(issue);
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException("Error adding issue.", e);
         }
-
     }
 
-    public Issue fetchIssueDetails(Long id) {
+    public Issue fetchIssueDetails(Long issueId) {
         try {
-            return issueRepository.fetchIssueDetails(id);
-
+            return issueRepository.fetchIssueDetails(issueId);
+        } catch (NotFoundException e) {
+            log.warn("Issue not found.", e);
+            throw e;
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error fetching issue details.", e);
         }
     }
 
     public void updateIssueByStatus(Long issueId, String status) {
         try {
             issueRepository.updateIssueByStatus(issueId, status);
-        } catch (IOException e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
+        } catch (NotFoundException e) {
+            log.warn("Issue not found or updated status is the same as the current status.", e);
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating issue status.", e);
         }
     }
 
     public void updateIssueByEmployee(Long issueId, Long employeeId) {
         try {
             issueRepository.updateIssueByEmployee(issueId, employeeId);
-        } catch (IOException e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating issue employee.", e);
         }
     }
 
@@ -66,21 +75,23 @@ public class IssueService {
         try {
             issueRepository.deleteIssue(issueId);
         } catch (Exception e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
+            throw new RuntimeException("Error deleting issue.", e);
         }
     }
 
     public List<Issue> getIssuesByStatus(Status status) {
-        return issueRepository.getIssuesByStatus(status);
+        try {
+            return issueRepository.getIssuesByStatus(status);
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting issues by status.", e);
+        }
     }
-    public List<Issue> getIssuesByEmployeeId(Long employeeId){
+
+    public List<Issue> getIssuesByEmployeeId(Long employeeId) {
         try {
             return issueRepository.getIssuesByEmployeeId(employeeId);
         } catch (Exception e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error getting issues by employee ID.", e);
         }
     }
 }

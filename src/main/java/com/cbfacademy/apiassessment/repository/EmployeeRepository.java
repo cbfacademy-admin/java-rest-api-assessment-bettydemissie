@@ -3,12 +3,13 @@ package com.cbfacademy.apiassessment.repository;
 import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.utils.EmployeeConverter;
 import com.cbfacademy.apiassessment.utils.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class EmployeeRepository {
@@ -17,14 +18,18 @@ public class EmployeeRepository {
     @Autowired
     private EmployeeConverter employeeConverter;
 
+    private static final Logger log = LoggerFactory.getLogger(EmployeeRepository.class);
     public EmployeeRepository(@Value("${file.path.employee}") String filePath) {
         this.filePath = filePath;
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeConverter.readJsonFile(filePath);
+        try {
+            return employeeConverter.readJsonFile(filePath);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reading employees from file.", e);
+        }
     }
-
     //Retrieves the details of an employee when provided their id
     public Employee getEmployeeById(Long employeeId) {
         try {
@@ -39,27 +44,28 @@ public class EmployeeRepository {
                 }
             }
         } catch (Exception e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace(); // Consider logging the exception
-            throw new RuntimeException("An error occurred while processing the request");
+            log.error("An error occurred while processing the request");
+            throw new NotFoundException("An error occurred while processing the request");
         }
         return null;
     }
 
-
     public Employee addEmployee(Employee employee) {
-        List<Employee> employees = getAllEmployees();
-
-        if (employees == null) {
-            //throw an exception if no employees are in json
-            throw new RuntimeException("Error reading existing employees from the file.");
+        try {
+            List<Employee> employees = getAllEmployees();
+            if (employees == null) {
+                throw new IllegalStateException("Error reading existing employees from the file.");
+            }
+            if (checkEmployeeExist(employee.getId())) {
+                throw new IllegalStateException("Employee with ID " + employee.getId() + " already exists.");
+            }
+            employees.add(employee);
+            employeeConverter.writeJsonFile(employees, filePath);
+            return employee;
+        } catch (Exception e) {
+            log.error("Unexpected error while adding employee.", e);
+            throw new RuntimeException("Unexpected error while adding employee.", e);
         }
-
-        employees.add(employee);
-        // Write the updated list of employees back to the file
-        employeeConverter.writeJsonFile(employees, filePath);
-
-        return employee;
     }
 
     //Internal method to check if the employee exists based off id
@@ -69,6 +75,5 @@ public class EmployeeRepository {
         return employees.stream()
                 .anyMatch(employee -> employee.getId().equals(employeeId));
     }
-
 }
 

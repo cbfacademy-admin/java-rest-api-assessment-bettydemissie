@@ -1,5 +1,5 @@
 package com.cbfacademy.apiassessment;
 
-public class ServiceTests {
+public class IssueServiceTests {
 
 }

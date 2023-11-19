@@ -1,6 +1,5 @@
 package com.cbfacademy.apiassessment.repository;
 
-import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.utils.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,38 +33,37 @@ public class IssueRepository {
     }
 
     public List<Issue> getAllIssues() {
-        return issueConverter.readJsonFile(filePath);
-    }
-
-    public void addIssue(Issue issue) {
         try {
-            // Read existing issues from the file
-            List<Issue> issues = getAllIssues();
-            // Check if the list is null
-            if (issues == null) {
-                // Handle the error
-                throw new RuntimeException("Error reading existing issues from the file.");
-            }
-            // Add the new issue to the list
-            issues.add(issue);
-            // Write the updated list of issues back to the file
-            saveIssue(issues, filePath);
-            log.info("Issue added successfully.");
+            return issueConverter.readJsonFile(filePath);
         } catch (Exception e) {
-            // Log the exception
-            log.error("Error adding issue.", e);
+            throw new RuntimeException("Error reading issues from file.", e);
         }
     }
+    public void addIssue(Issue issue) {
+        try {
+            List<Issue> issues = getAllIssues();
+            //Check if there are issues in the issues list
+            if (issues == null) {
+                throw new IllegalStateException("Error reading existing issues from the file.");
+            }
+            // Check if the issueId already exists
+            if (doesIssueExist(issue.getId())) {
+                throw new IllegalStateException("Issue with ID " + issue.getId() + " already exists.");
+            }
+            issues.add(issue);
+            saveIssue(issues, filePath);
+            log.info("Issue added successfully.");
 
-    public boolean doesIssueExist(Long issueId) throws IOException {
-        List<Issue> issuesList = getAllIssues();
-        return issuesList.stream().anyMatch(issue -> issue.getId().equals(issueId));
+        } catch (Exception e) {
+            log.error("Error while adding issue.", e);
+            throw new RuntimeException("Error while adding issue.", e);
+        }
     }
 
     public Issue fetchIssueDetails(Long issueId) {
         try {
             if (!doesIssueExist(issueId)) {
-                return null;
+                throw new NotFoundException("Issue not found");
             } else {
                 List<Issue> issues = getAllIssues();
                 return issues.stream()
@@ -74,28 +72,31 @@ public class IssueRepository {
                         .orElse(null);
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your application's requirements
-            return null;
+            log.error("Error fetching issue details.", e);
+            throw new RuntimeException("Error fetching issue details.", e);
         }
     }
 
-    public void updateIssueByStatus(Long issueId, String status) throws IOException {
-        List<Issue> issues = getAllIssues();
-        //convert string to Status class
-        for (Issue issue : issues) {
-            if (issue.getId().equals(issueId) && issue.getStatus().getStatus() != status) {
-                //map to converted status from above
-                Status newStatus = Status.valueOf(status);
-                issue.setStatus(newStatus);
-                saveIssue(issue, filePath);
-            }
-            else {
-                throw new NotFoundException("Issue not found or updated status is the same as current status");
-            }
-        }
-        // Handle the case where the issue with given ID is not found
-    }
+    //Updates the status of the Issue for when progress has been made
+    public void updateIssueByStatus(Long issueId, String status) {
+        try {
+            List<Issue> issues = getAllIssues();
 
+            for (Issue issue : issues) {
+                if (issue.getId().equals(issueId) && !issue.getStatus().getStatus().equals(status)) {
+                    //convert string to Status class
+                    Status newStatus = Status.valueOf(status);
+                    issue.setStatus(newStatus);
+                    saveIssue(issue, filePath);
+                }
+            }
+            throw new NotFoundException("Issue not found or updated status is the same as the current status");
+        } catch (Exception e) {
+            log.error("Error updating issue status.", e);
+            throw new RuntimeException("Error updating issue status.", e);
+        }
+    }
+    //Change the employee assigned to an Issue
     public void updateIssueByEmployee(Long issueId, Long employeeId) throws IOException {
         List<Issue> issues = getAllIssues();
 
@@ -128,7 +129,6 @@ public class IssueRepository {
     public void deleteIssue(Long issueId) {
         try {
             List<Issue> issues = getAllIssues();
-
             // Check if the issueId exists before attempting to remove
             boolean issueExists = issues.removeIf(issue -> issue.getId().equals(issueId));
 
@@ -139,36 +139,12 @@ public class IssueRepository {
 
             saveIssue(issues, filePath);
         } catch (Exception e) {
-            // Log the exception or handle it based on your application's requirements
-            e.printStackTrace();
+            log.error("Error deleting issue.", e);
             throw new RuntimeException("Error deleting issue.", e);
         }
     }
 
-    //save a single issue to the json file
-    public void saveIssue(Issue issue, String filePath) {
-
-        // Read existing issues from the file
-        List<Issue> existingIssues = issueConverter.readJsonFile(filePath);
-
-        // Check if the list is null (indicating an error reading the file)
-        if (existingIssues == null) {
-            // Handle the error, for example, throw an exception or log a message
-            throw new NotFoundException("No issues from the file found.");
-        }
-        // Append the new or edited issue to the list
-        else {
-            existingIssues.add(issue);
-            // Write the updated list of issues back to the file
-            issueConverter.writeJsonFile(existingIssues, filePath);
-        }
-    }
-
-    //method overload to save a list of issues to the json file
-    public void saveIssue(List<Issue> issues, String filePath) {
-        // Write the list of issues to the file
-        issueConverter.writeJsonFile(issues, filePath);
-    }
+    //Retrieve Issues based on Status, for example, retrieve all "COMPLETE" issues
     public List<Issue> getIssuesByStatus(Status status) {
         try {
             // Ensure the issues are sorted by status
@@ -193,30 +169,9 @@ public class IssueRepository {
                 throw new NotFoundException("No issue found with status: " + status);
             }
         } catch (Exception e) {
-            // Log the exception for debugging purposes
             log.error("Error while fetching issues by status", e);
-            // Rethrow the exception with a more specific message
             throw new NotFoundException("Error while fetching issues by status");
         }
-    }
-
-    private int binarySearch(List<Issue> issues, Status status) {
-        int low = 0;
-        int high = issues.size() - 1;
-
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            Status midStatus = issues.get(mid).getStatus();
-
-            if (midStatus == status) {
-                return mid; // Found the status
-            } else if (midStatus.compareTo(status) < 0) {
-                low = mid + 1; // Search in the right half
-            } else {
-                high = mid - 1; // Search in the left half
-            }
-        }
-        return -1; // Status not found
     }
 
     //Retrieve all the issues that a given Employee has been assigned
@@ -243,11 +198,58 @@ public class IssueRepository {
                 }
             }
         } catch (Exception e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace(); // Consider logging the exception
-            throw new RuntimeException("An error occurred while processing the request");
+            throw new RuntimeException("An error occurred while getting Issues belonging to this employee");
         }
     }
 
+    //Internal method to see if the issueId exists in the json
+    public boolean doesIssueExist(Long issueId) throws IOException {
+        List<Issue> issuesList = getAllIssues();
+        return issuesList.stream().anyMatch(issue -> issue.getId().equals(issueId));
+    }
 
+    //Internal method to implement binary search algorithm
+    private int binarySearch(List<Issue> issues, Status status) {
+        int low = 0;
+        int high = issues.size() - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            Status midStatus = issues.get(mid).getStatus();
+
+            if (midStatus == status) {
+                return mid; // Found the status
+            } else if (midStatus.compareTo(status) < 0) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
+        }
+        return -1; // Status not found
+    }
+
+    //save a single issue to the json file
+    public void saveIssue(Issue issue, String filePath) {
+
+        // Read existing issues from the file
+        List<Issue> existingIssues = issueConverter.readJsonFile(filePath);
+
+        // Check if the list is null (indicating an error reading the file)
+        if (existingIssues == null) {
+            // Handle the error, for example, throw an exception or log a message
+            throw new NotFoundException("No issues from the file found.");
+        }
+        // Append the new or edited issue to the list
+        else {
+            existingIssues.add(issue);
+            // Write the updated list of issues back to the file
+            issueConverter.writeJsonFile(existingIssues, filePath);
+        }
+    }
+
+    //method overload to save a list of issues to the json file
+    public void saveIssue(List<Issue> issues, String filePath) {
+        // Write the list of issues to the file
+        issueConverter.writeJsonFile(issues, filePath);
+    }
 }
