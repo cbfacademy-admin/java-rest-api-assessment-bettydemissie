@@ -84,6 +84,7 @@ Feel free to explore the API endpoints to create, retrieve, update, and delete i
 Here are all the endpoints to add to `htgittp://localhost:8081`:
 
 ** Issue **
+
 Add a New Issue
 
 Endpoint: POST /api/v1/issues/add
