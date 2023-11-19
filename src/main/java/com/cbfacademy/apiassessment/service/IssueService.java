@@ -34,7 +34,6 @@ public class IssueService {
 
     }
 
-
     public Issue fetchIssueDetails(Long id) {
         try {
             return issueRepository.fetchIssueDetails(id);
@@ -75,5 +74,13 @@ public class IssueService {
     public List<Issue> getIssuesByStatus(Status status) {
         return issueRepository.getIssuesByStatus(status);
     }
-
+    public List<Issue> getIssuesByEmployeeId(Long employeeId){
+        try {
+            return issueRepository.getIssuesByEmployeeId(employeeId);
+        } catch (Exception e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

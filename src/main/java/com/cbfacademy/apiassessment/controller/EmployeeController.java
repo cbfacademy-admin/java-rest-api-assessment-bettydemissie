@@ -1,6 +1,7 @@
 package com.cbfacademy.apiassessment.controller;
 
 import com.cbfacademy.apiassessment.model.entities.Employee;
+import com.cbfacademy.apiassessment.model.entities.Issue;
 import com.cbfacademy.apiassessment.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeService.getEmployeeById(id);
+    @GetMapping("/{employeeId}")
+    public Employee getEmployeeById(@PathVariable Long employeeId) {
+        return employeeService.getEmployeeById(employeeId);
     }
 
     @PostMapping("/add")

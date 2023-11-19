@@ -19,6 +19,15 @@ public class Employee {
         this.department = department;
     }
 
+    public Employee()
+    {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.department = department;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

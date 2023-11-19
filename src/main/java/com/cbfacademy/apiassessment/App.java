@@ -9,6 +9,7 @@ import com.cbfacademy.apiassessment.model.entities.Issue;
 import com.cbfacademy.apiassessment.model.enums.Department;
 import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.utils.IssueConverter;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 //import springfox.documentation.swagger2.annotations.EnableSwagger2;
 

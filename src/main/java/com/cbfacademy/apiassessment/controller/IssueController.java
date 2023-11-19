@@ -15,12 +15,10 @@ import com.cbfacademy.apiassessment.model.entities.Issue;
 //appcontroller
 public class IssueController{
     private final IssueService issueService;
-    private final EmployeeService employeeService;
 
     @Autowired
     public IssueController(IssueService issueService, EmployeeService employeeService) {
         this.issueService = issueService;
-        this.employeeService = employeeService; //separate
     }
 
     @PostMapping("/add")
@@ -60,5 +58,7 @@ public class IssueController{
     public List<Issue> getIssuesByStatus(@PathVariable String status) {
         return issueService.getIssuesByStatus(Status.valueOf(status));
     }
+    @GetMapping("/{employeeId}")
+    public List<Issue> getIssuesByEmployeeId(@PathVariable Long employeeId) { return issueService.getIssuesByEmployeeId(employeeId); }
 
 }

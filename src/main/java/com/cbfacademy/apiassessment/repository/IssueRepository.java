@@ -1,5 +1,6 @@
 package com.cbfacademy.apiassessment.repository;
 
+import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.utils.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,29 +89,13 @@ public class IssueRepository {
                 issue.setStatus(newStatus);
                 saveIssue(issue, filePath);
             }
+            else {
+                throw new NotFoundException("Issue not found or updated status is the same as current status");
+            }
         }
         // Handle the case where the issue with given ID is not found
     }
 
-//    public void updateIssueByEmployee(Long issueId, Long employeeId) throws IOException {
-//        List<Issue> issues = getAllIssues();
-//        // Check if the employeeId exists in the JSON file
-//        if (!(employeeRepository.checkEmployeeExist(employeeId))) {
-//            log.info("Employee with ID " + employeeId + " does not exist.");
-//        } else {
-//            // Check if the issueId exists and update the assignedTo field
-//            for (Issue issue : issues) {
-//                if (issue.getId().equals(issueId)) {
-//                    // Update the assignedTo field with the new employeeId
-//                    issue.setAssignedTo(employeeRepository.getEmployeeByID(employeeId));
-//
-//                    // Write the updated list of issues back to the file
-//                    saveIssue(issues, filePath);
-//                }
-//            }
-//        }
-//        // Handle the case where the issueId or the employeeId is not found
-//    }
     public void updateIssueByEmployee(Long issueId, Long employeeId) throws IOException {
         List<Issue> issues = getAllIssues();
 
@@ -119,7 +104,6 @@ public class IssueRepository {
             log.info("Employee with ID " + employeeId + " does not exist.");
             throw new NotFoundException("Employee with ID " + employeeId + " not found.");
         }
-
         // Check if the issueId exists and update the assignedTo field
         boolean issueFound = false;
         for (Issue issue : issues) {
@@ -134,7 +118,6 @@ public class IssueRepository {
                 break; // Assuming issueId is unique, exit loop after the first match
             }
         }
-
         // Handle the case where the issueId is not found
         if (!issueFound) {
             log.info("Issue with ID " + issueId + " not found.");
@@ -162,6 +145,7 @@ public class IssueRepository {
         }
     }
 
+    //save a single issue to the json file
     public void saveIssue(Issue issue, String filePath) {
 
         // Read existing issues from the file
@@ -170,7 +154,7 @@ public class IssueRepository {
         // Check if the list is null (indicating an error reading the file)
         if (existingIssues == null) {
             // Handle the error, for example, throw an exception or log a message
-            log.info("Error reading existing issues from the file.");
+            throw new NotFoundException("No issues from the file found.");
         }
         // Append the new or edited issue to the list
         else {
@@ -180,38 +164,39 @@ public class IssueRepository {
         }
     }
 
+    //method overload to save a list of issues to the json file
     public void saveIssue(List<Issue> issues, String filePath) {
         // Write the list of issues to the file
         issueConverter.writeJsonFile(issues, filePath);
-
     }
     public List<Issue> getIssuesByStatus(Status status) {
         try {
             // Ensure the issues are sorted by status
-            List<Issue> sortedIssues = getAllIssues();
-            Collections.sort(sortedIssues, Comparator.comparing(Issue::getStatus));
+            List<Issue> issues = getAllIssues();
+            Collections.sort(issues, Comparator.comparing(Issue::getStatus));
 
             // Perform binary search
-            int index = binarySearch(sortedIssues, status);
+            int index = binarySearch(issues, status);
 
             if (index != -1) {
                 // If the status is found, return the list of issues with that status
                 List<Issue> issuesWithStatus = new ArrayList<>();
-                for (int i = index; i >= 0 && sortedIssues.get(i).getStatus() == status; i--) {
-                    issuesWithStatus.add(sortedIssues.get(i));
+                for (int i = index; i >= 0 && issues.get(i).getStatus() == status; i--) {
+                    issuesWithStatus.add(issues.get(i));
                 }
-                for (int i = index + 1; i < sortedIssues.size() && sortedIssues.get(i).getStatus() == status; i++) {
-                    issuesWithStatus.add(sortedIssues.get(i));
+                for (int i = index + 1; i < issues.size() && issues.get(i).getStatus() == status; i++) {
+                    issuesWithStatus.add(issues.get(i));
                 }
                 return issuesWithStatus;
             } else {
-                // If the status is not found, return an empty list or handle accordingly
-                return Collections.emptyList();
+                // If the status is not found
+                throw new NotFoundException("No issue found with status: " + status);
             }
         } catch (Exception e) {
-            // Handle the exception according to your application's requirements
-            e.printStackTrace();
-            return Collections.emptyList();
+            // Log the exception for debugging purposes
+            log.error("Error while fetching issues by status", e);
+            // Rethrow the exception with a more specific message
+            throw new NotFoundException("Error while fetching issues by status");
         }
     }
 
@@ -231,8 +216,38 @@ public class IssueRepository {
                 high = mid - 1; // Search in the left half
             }
         }
-
         return -1; // Status not found
     }
+
+    //Retrieve all the issues that a given Employee has been assigned
+    public List<Issue> getIssuesByEmployeeId(Long employeeId) {
+        try {
+            // Check if the employee exists
+            if (!employeeRepository.checkEmployeeExist(employeeId)) {
+                throw new NotFoundException("This employee does not exist");
+            } else {
+                List<Issue> issues = getAllIssues();
+
+                List<Issue> issuesForEmployee = new ArrayList<>();
+
+                for (Issue issue : issues) {
+                    if (issue.getAssignedTo().getId().equals(employeeId)) {
+                        issuesForEmployee.add(issue);
+                    }
+                }
+
+                if (issuesForEmployee.isEmpty()) {
+                    throw new NotFoundException("No assigned issues found for employee with ID: " + employeeId);
+                } else {
+                    return issuesForEmployee;
+                }
+            }
+        } catch (Exception e) {
+            // Handle the exception according to your application's requirements
+            e.printStackTrace(); // Consider logging the exception
+            throw new RuntimeException("An error occurred while processing the request");
+        }
+    }
+
 
 }

@@ -75,5 +75,68 @@
     "lastname": "Zeus",
     "email": "jordz@example.com",
     "department": "INVESTMENT_BANKING"
+  },
+  {
+    "id": 12,
+    "firstname": "Grace",
+    "lastname": "Anderson",
+    "email": "graceanderson@example.com",
+    "department": "GROUP_FUNCTIONS"
+  },
+  {
+    "id": 13,
+    "firstname": "Frank",
+    "lastname": "Martin",
+    "email": "frankmartin@example.com",
+    "department": "GROUP_FUNCTIONS"
+  },
+  {
+    "id": 14,
+    "firstname": "Olivia",
+    "lastname": "Harrison",
+    "email": "oliviah@example.com",
+    "department": "GROUP_FUNCTIONS"
+  },
+  {
+    "id": 15,
+    "firstname": "Michael",
+    "lastname": "Smithson",
+    "email": "mikes@example.com",
+    "department": "INVESTMENT_BANKING"
+  },
+  {
+    "id": 16,
+    "firstname": "Emma",
+    "lastname": "Roberts",
+    "email": "emmarob@example.com",
+    "department": "ASSET_MANAGEMENT"
+  },
+  {
+    "id": 17,
+    "firstname": "Nathan",
+    "lastname": "Jones",
+    "email": "nathanj@example.com",
+    "department": "WEALTH_MANAGEMENT"
+  },
+  {
+    "id": 18,
+    "firstname": "Sophia",
+    "lastname": "Walker",
+    "email": "sophiaw@example.com",
+    "department": "PRIVATE_CORPORATE"
+  },
+  {
+    "id": 19,
+    "firstname": "Daniel",
+    "lastname": "Cooper",
+    "email": "danielc@example.com",
+    "department": "PRIVATE_CORPORATE"
+  },
+  {
+    "id": 20,
+    "firstname": "Isabella",
+    "lastname": "Turner",
+    "email": "isabellat@example.com",
+    "department": "WEALTH_MANAGEMENT"
   }
 ]

@@ -1,6 +1,7 @@
 package com.cbfacademy.apiassessment.service;
 
 import com.cbfacademy.apiassessment.model.entities.Employee;
+import com.cbfacademy.apiassessment.model.entities.Issue;
 import com.cbfacademy.apiassessment.repository.EmployeeRepository;
 import com.cbfacademy.apiassessment.repository.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class EmployeeService {
         return employeeRepository.getAllEmployees();
     }
 
-    public Employee getEmployeeById(Long ID) {
-        return employeeRepository.getEmployeeById(ID);
+    public Employee getEmployeeById(Long employeeId) {
+        return employeeRepository.getEmployeeById(employeeId);
     }
 
     public Employee addEmployee(Employee employee) {
