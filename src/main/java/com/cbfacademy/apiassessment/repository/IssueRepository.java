@@ -1,6 +1,7 @@
 package com.cbfacademy.apiassessment.repository;
 
-import com.cbfacademy.apiassessment.utils.NotFoundException;
+import com.cbfacademy.apiassessment.exemptionhandling.AlreadyExistsExemption;
+import com.cbfacademy.apiassessment.exemptionhandling.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -48,12 +49,14 @@ public class IssueRepository {
             }
             // Check if the issueId already exists
             if (doesIssueExist(issue.getId())) {
-                throw new IllegalStateException("Issue with ID " + issue.getId() + " already exists.");
+                throw new AlreadyExistsExemption("Issue with ID " + issue.getId() + " already exists.");
             }
             issues.add(issue);
             saveIssue(issues, filePath);
             log.info("Issue added successfully.");
 
+        } catch (AlreadyExistsExemption e) {
+            throw e; // Re-throw AlreadyExistsExemption directly
         } catch (Exception e) {
             log.error("Error while adding issue.", e);
             throw new RuntimeException("Error while adding issue.", e);
@@ -77,27 +80,37 @@ public class IssueRepository {
         }
     }
 
-    //Updates the status of the Issue for when progress has been made
     public void updateIssueByStatus(Long issueId, String status) {
         try {
             List<Issue> issues = getAllIssues();
 
+            boolean issueFound = false;
+
             for (Issue issue : issues) {
-                if (issue.getId().equals(issueId) && !issue.getStatus().getStatus().equals(status)) {
-                    //convert string to Status class
-                    Status newStatus = Status.valueOf(status);
-                    issue.setStatus(newStatus);
-                    saveIssue(issue, filePath);
+                if (issue.getId().equals(issueId)) {
+                    if (!issue.getStatus().getStatus().equals(status)) {
+                        // Convert string to Status class
+                        Status newStatus = Status.valueOf(status);
+                        issue.setStatus(newStatus);
+                        saveIssue(issues, filePath);
+                    }
+                    issueFound = true;
+                    break; // Assuming issueId is unique, exit loop after the first match
                 }
             }
-            throw new NotFoundException("Issue not found or updated status is the same as the current status");
+
+            if (!issueFound) {
+                throw new NotFoundException("Issue not found");
+            }
+
         } catch (Exception e) {
             log.error("Error updating issue status.", e);
             throw new RuntimeException("Error updating issue status.", e);
         }
     }
+
     //Change the employee assigned to an Issue
-    public void updateIssueByEmployee(Long issueId, Long employeeId) throws IOException {
+    public void updateIssuesAssignedToEmployee(Long issueId, Long employeeId) {
         List<Issue> issues = getAllIssues();
 
         // Check if the employeeId exists in the JSON file
@@ -175,7 +188,7 @@ public class IssueRepository {
     }
 
     //Retrieve all the issues that a given Employee has been assigned
-    public List<Issue> getIssuesByEmployeeId(Long employeeId) {
+    public List<Issue> getIssuesAssignedToEmployee(Long employeeId) {
         try {
             // Check if the employee exists
             if (!employeeRepository.checkEmployeeExist(employeeId)) {

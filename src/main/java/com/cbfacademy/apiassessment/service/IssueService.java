@@ -1,11 +1,11 @@
 package com.cbfacademy.apiassessment.service;
 
-import java.io.IOException;
 import java.util.List;
 
+import com.cbfacademy.apiassessment.exemptionhandling.AlreadyExistsExemption;
 import com.cbfacademy.apiassessment.model.enums.Status;
 import com.cbfacademy.apiassessment.repository.IssueRepository;
-import com.cbfacademy.apiassessment.utils.NotFoundException;
+import com.cbfacademy.apiassessment.exemptionhandling.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,6 @@ public class IssueService {
         try {
             return issueRepository.getAllIssues();
         } catch (Exception e) {
-            // Log the error or handle it as appropriate for your application
             throw new RuntimeException("Error getting all issues.", e);
         }
     }
@@ -36,6 +35,8 @@ public class IssueService {
     public void addIssue(Issue issue) {
         try {
             issueRepository.addIssue(issue);
+        } catch (AlreadyExistsExemption e) {
+            throw e; // Re-throw AlreadyExistsExemption directly
         } catch (Exception e) {
             throw new RuntimeException("Error adding issue.", e);
         }
@@ -45,7 +46,7 @@ public class IssueService {
         try {
             return issueRepository.fetchIssueDetails(issueId);
         } catch (NotFoundException e) {
-            log.warn("Issue not found.", e);
+            log.error("Issue not found.", e);
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("Error fetching issue details.", e);
@@ -56,16 +57,16 @@ public class IssueService {
         try {
             issueRepository.updateIssueByStatus(issueId, status);
         } catch (NotFoundException e) {
-            log.warn("Issue not found or updated status is the same as the current status.", e);
+            log.error("Issue not found or updated status is the same as the current status.", e);
             throw e;
         } catch (Exception e) {
             throw new RuntimeException("Error updating issue status.", e);
         }
     }
 
-    public void updateIssueByEmployee(Long issueId, Long employeeId) {
+    public void updateIssuesAssignedToEmployee(Long issueId, Long employeeId) {
         try {
-            issueRepository.updateIssueByEmployee(issueId, employeeId);
+            issueRepository.updateIssuesAssignedToEmployee(issueId, employeeId);
         } catch (Exception e) {
             throw new RuntimeException("Error updating issue employee.", e);
         }
@@ -87,9 +88,9 @@ public class IssueService {
         }
     }
 
-    public List<Issue> getIssuesByEmployeeId(Long employeeId) {
+    public List<Issue> getIssuesAssignedToEmployee(Long employeeId) {
         try {
-            return issueRepository.getIssuesByEmployeeId(employeeId);
+            return issueRepository.getIssuesAssignedToEmployee(employeeId);
         } catch (Exception e) {
             throw new RuntimeException("Error getting issues by employee ID.", e);
         }

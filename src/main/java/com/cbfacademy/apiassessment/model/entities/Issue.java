@@ -1,7 +1,5 @@
 package com.cbfacademy.apiassessment.model.entities;
 
-import java.util.List;
-
 import com.cbfacademy.apiassessment.model.enums.Status;
 
 public class Issue {

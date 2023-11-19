@@ -3,7 +3,7 @@ package com.cbfacademy.apiassessment;
 import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.model.enums.Department;
 import com.cbfacademy.apiassessment.repository.EmployeeRepository;
-import com.cbfacademy.apiassessment.utils.NotFoundException;
+import com.cbfacademy.apiassessment.exemptionhandling.NotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

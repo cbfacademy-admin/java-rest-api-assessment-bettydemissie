@@ -1,8 +1,9 @@
 package com.cbfacademy.apiassessment.repository;
 
+import com.cbfacademy.apiassessment.exemptionhandling.AlreadyExistsExemption;
 import com.cbfacademy.apiassessment.model.entities.Employee;
 import com.cbfacademy.apiassessment.utils.EmployeeConverter;
-import com.cbfacademy.apiassessment.utils.NotFoundException;
+import com.cbfacademy.apiassessment.exemptionhandling.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class EmployeeRepository {
             throw new RuntimeException("Error reading employees from file.", e);
         }
     }
+
     //Retrieves the details of an employee when provided their id
     public Employee getEmployeeById(Long employeeId) {
         try {
@@ -57,7 +59,7 @@ public class EmployeeRepository {
                 throw new IllegalStateException("Error reading existing employees from the file.");
             }
             if (checkEmployeeExist(employee.getId())) {
-                throw new IllegalStateException("Employee with ID " + employee.getId() + " already exists.");
+                throw new AlreadyExistsExemption("Employee with ID " + employee.getId() + " already exists.");
             }
             employees.add(employee);
             employeeConverter.writeJsonFile(employees, filePath);
