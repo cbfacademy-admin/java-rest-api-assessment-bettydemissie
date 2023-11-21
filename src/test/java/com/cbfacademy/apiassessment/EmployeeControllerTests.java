@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -35,13 +34,14 @@ public class EmployeeControllerTests {
 
     @BeforeEach
     public void setUp() {
+        // Initialize mocks and setup mockMvc before each test
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(employeeController).build();
     }
 
-    // Example test using camelCase
     @Test
     public void testGetAllEmployees() throws Exception {
+        // Mock data
         Employee one = new Employee(1, "Martin", "Singleton", "martins@example.com", Department.ASSET_MANAGEMENT);
         Employee two = new Employee(2, "Jane", "Doe", "jane@example.com", Department.PRIVATE_CORPORATE);
 
@@ -51,6 +51,7 @@ public class EmployeeControllerTests {
 
         when(employeeService.getAllEmployees()).thenReturn(employees);
 
+        // Perform the HTTP GET request and validate the response
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -64,17 +65,18 @@ public class EmployeeControllerTests {
                 .andExpect(jsonPath("$[1].lastname").value("Doe"))
                 .andExpect(jsonPath("$[1].email").value("jane@example.com"))
                 .andExpect(jsonPath("$[1].department").value("PRIVATE_CORPORATE"))
-                .andDo(print());
+                .andDo(print()); // Log the request and response
     }
-
 
     @Test
     public void testGetEmployeeById() throws Exception {
+        // Mock data
         long employeeId = 1L;
         Employee employee = new Employee(employeeId, "John", "Doe", "john.doe@example.com", Department.GROUP_FUNCTIONS);
 
         when(employeeService.getEmployeeById(employeeId)).thenReturn(employee);
 
+        // Perform the HTTP GET request and validate the response
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/employees/{employeeId}", employeeId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -88,22 +90,24 @@ public class EmployeeControllerTests {
 
     @Test
     public void testAddEmployee() throws Exception {
+        // Mock data
         Employee employee = new Employee(1L, "John", "Doe", "john.doe@example.com", Department.GROUP_FUNCTIONS);
 
         when(employeeService.addEmployee(any(Employee.class))).thenReturn(employee);
 
+        // Perform the HTTP POST request and validate the response
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/employees/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\":1,\"firstname\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@example.com\",\"department\":\"GROUP_FUNCTIONS\"}")
                 )
-                .andExpect(status().isCreated()) // Update the expectation to 201
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.firstname").value("John"))
                 .andExpect(jsonPath("$.lastname").value("Doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"))
                 .andExpect(jsonPath("$.department").value("GROUP_FUNCTIONS"))
-                .andDo(print())
+                .andDo(print()) // Log the request and response
                 .andReturn();
 
         verify(employeeService, times(1)).addEmployee(any(Employee.class));

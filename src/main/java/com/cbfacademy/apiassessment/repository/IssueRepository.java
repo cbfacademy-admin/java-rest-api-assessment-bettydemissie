@@ -69,6 +69,7 @@ public class IssueRepository {
                 throw new NotFoundException("Issue not found");
             } else {
                 List<Issue> issues = getAllIssues();
+                //Use stream to find the issue using unique id
                 return issues.stream()
                         .filter(issue -> issue.getId().equals(issueId))
                         .findAny()
@@ -80,17 +81,19 @@ public class IssueRepository {
         }
     }
 
+    //Updates the status of a specific issue identified by its unique ID.
     public void updateIssueByStatus(Long issueId, String status) {
         try {
             List<Issue> issues = getAllIssues();
-
+            // Flag to track if the issue with the specified ID is found
             boolean issueFound = false;
-
+            // Check if the current issue has the specified ID and status
             for (Issue issue : issues) {
                 if (issue.getId().equals(issueId)) {
                     if (!issue.getStatus().getStatus().equals(status)) {
                         // Convert string to Status class
                         Status newStatus = Status.valueOf(status);
+                        //Update the status
                         issue.setStatus(newStatus);
                         saveIssue(issues, filePath);
                     }
@@ -124,7 +127,6 @@ public class IssueRepository {
             if (issue.getId().equals(issueId)) {
                 // Update the assignedTo field with the new employeeId
                 issue.setAssignedTo(employeeRepository.getEmployeeById(employeeId));
-
                 // Write the updated list of issues back to the file
                 saveIssue(issues, filePath);
 
@@ -194,19 +196,22 @@ public class IssueRepository {
             if (!employeeRepository.checkEmployeeExist(employeeId)) {
                 throw new NotFoundException("This employee does not exist");
             } else {
+                // Retrieve all issues in the system
                 List<Issue> issues = getAllIssues();
-
+                // List to store issues assigned to the specified employee
                 List<Issue> issuesForEmployee = new ArrayList<>();
 
                 for (Issue issue : issues) {
+                    // Check if the issue is assigned to the specified employee
                     if (issue.getAssignedTo().getId().equals(employeeId)) {
                         issuesForEmployee.add(issue);
                     }
                 }
-
+                // Check if any issues are assigned to the employee
                 if (issuesForEmployee.isEmpty()) {
                     throw new NotFoundException("No assigned issues found for employee with ID: " + employeeId);
                 } else {
+                    // Return the list of assigned issues
                     return issuesForEmployee;
                 }
             }
@@ -214,7 +219,6 @@ public class IssueRepository {
             throw new RuntimeException("An error occurred while getting Issues belonging to this employee");
         }
     }
-
     //Internal method to see if the issueId exists in the json
     public boolean doesIssueExist(Long issueId) throws IOException {
         List<Issue> issuesList = getAllIssues();
@@ -246,10 +250,8 @@ public class IssueRepository {
 
         // Read existing issues from the file
         List<Issue> existingIssues = issueConverter.readJsonFile(filePath);
-
-        // Check if the list is null (indicating an error reading the file)
+        // Check if the list is null
         if (existingIssues == null) {
-            // Handle the error, for example, throw an exception or log a message
             throw new NotFoundException("No issues from the file found.");
         }
         // Append the new or edited issue to the list

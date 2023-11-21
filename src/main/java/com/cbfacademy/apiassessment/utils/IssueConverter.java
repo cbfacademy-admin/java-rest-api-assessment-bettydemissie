@@ -42,7 +42,6 @@ public class IssueConverter implements JsonConverter<Issue> {
 
         try (FileWriter writer = new FileWriter(new File(fileName))) {
             // Serialize the list of Issue objects to JSON and write to the file
-            //file.write(new Gson().toJson(issues));
             new Gson().toJson(issues, writer);
             status = true;
             // If the writing was successful, return true
