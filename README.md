@@ -1,3 +1,155 @@
+# **Issue API 🚀**
+<hr>
+Welcome to the Issue API, designed to empower the Operations team at UBS by offering a seamless solution for managing, tracking, and assigning issues across the organization. This system simplifies the process of creating structured issues, providing the Operations team with a templated structure to efficiently assess and resolve a wide range of challenges.
+
+## Purpose
+
+The primary goal of this API is to facilitate the Operations team at UBS in their day-to-day activities by providing an intuitive and powerful tool. Whether it's handling tasks, incidents, or resolving errors, this Issues API offers a robust platform for effective issue management. The API stores and retrieves data using a JSON file, ensuring that the Operations team can effortlessly navigate through various issues, promoting organizational efficiency.
+
+## Key Features
+
+- **Structured Issues:**  Easily create issues with a templated structure for consistency and clarity.
+- **Effortless Tracking:** Streamline the tracking process for tasks, incidents, and errors.
+- **Assignment Capabilities:** Assign and manage issues seamlessly across the organization.
+- **Organizational Insights:** Gain insights into ongoing issues to make informed decisions.
+- **JSON Data Storage:** Utilize a JSON file for efficient and organized data storage.
+
+This API is designed to enhance the workflow of the Operations team, providing them with a user-friendly and efficient solution for managing the dynamic landscape of organizational challenges.
+## Key Dependencies Used
+
+* **Springfox Swagger (springfox-boot-starter):**
+* Purpose: Integrates Swagger with Spring Boot to generate API documentation.
+* Usage: Automates the documentation of your APIs, making it easy to understand and test them.
+
+* **Swagger Core (swagger-core):**
+* Purpose: Core libraries for generating Swagger documentation.
+* Usage: Works in conjunction with springfox for API documentation.
+
+* **Gson (gson):**
+* Purpose: A library for JSON serialization and deserialization.
+* Usage: Used for handling JSON data in your application.
+## Data Model
+
+**Issue**
+```java 
+
+public class Issue {
+private Long id;
+private String title;
+private String description;
+private Status status;
+private Employee assignedTo;
+private Employee createdBy;
+}
+
+public enum Status {
+PENDING, IN_PROGRESS, COMPLETE;
+}
+```
+- id: Unique identifier for each issue.
+- title: Concise title describing the issue.
+- description: Detailed information about the issue.
+- status: Current status of the issue (e.g., PENDING, IN_PROGRESS, COMPLETE).
+- assignedTo: Employee assigned to handle the issue.
+- createdBy: Employee who created the issue.
+
+**Employee**
+```java 
+public class Employee {
+private Long id;
+private String firstName;
+private String lastName;
+private String email;
+private Department department;
+}
+
+public enum Department {
+GROUP_FUNCTIONS,
+ASSET_MANAGEMENT,
+INVESTMENT_BANKING,
+WEALTH_MANAGEMENT,
+PRIVATE_CORPORATE;
+}
+```
+- id: Unique identifier for each employee.
+- firstName: First name of the employee.
+- lastName: Last name of the employee.
+- email: Email address of the employee.
+- department: Department in which the employee works (e.g., GROUP_FUNCTIONS, ASSET_MANAGEMENT, INVESTMENT_BANKING, WEALTH_MANAGEMENT, PRIVATE_CORPORATE).
+
+Feel free to explore the API endpoints to create, retrieve, update, and delete issues, as well as manage employees involved in the resolution process.
+
+## End Points
+
+Here are all the endpoints to add to `htgittp://localhost:8081`:
+
+** Issue **
+
+Add a New Issue
+
+Endpoint: POST /api/v1/issues/add
+Description: Creates a new issue with the provided details.
+
+Get All Issues
+
+Endpoint: GET /api/v1/issues/all
+Description: Retrieves a list of all issues.
+
+Fetch Issue Details
+
+Endpoint: GET /api/v1/issues/fetch/{issueId}
+Description: Retrieves details of a specific issue based on its ID.
+
+Update Issues Assigned to Employee
+
+Endpoint: PUT /api/v1/issues/update/{issueId}
+Description: Updates the assigned employee for a specific issue.
+
+Update Issue Status
+
+Endpoint: PUT /api/v1/issues/update/status/{issueId}
+Description: Updates the status of a specific issue.
+
+Delete an Issue
+
+Endpoint: DELETE /api/v1/issues/void/{issueId}
+Description: Deletes a specific issue based on its ID.
+
+Get Issues by Status
+
+Endpoint: GET /api/v1/issues/status/{status}
+Description: Retrieves a list of issues based on their status.
+
+Get Issues Assigned to an Employee
+
+Endpoint: GET /api/v1/issues/{employeeId}
+Description: Retrieves a list of issues assigned to a specific employee.
+
+** Employee **
+
+Get All Employees
+
+Endpoint: GET /api/v1/employees/all
+Description: Retrieves a list of all employees.
+
+Get Employee by ID
+
+Endpoint: GET /api/v1/employees/{employeeId}
+Description: Retrieves details of a specific employee based on their ID.
+
+Add a New Employee
+
+Endpoint: POST /api/v1/employees/add
+Description: Creates a new employee with the provided details.
+
+## Documentation
+While the application is running, you can explore the comprehensive documentation and operational endpoints at: 
+[Issue API Swagger Documentation] http://localhost:8081/swagger-ui/index.html#/
+
+
+
+
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/iDPpP-d0)
 # **Java API Assessment**
 
 ## **Introduction**
@@ -175,7 +327,7 @@ You should see console output similar to the following (press `Ctrl + C` to exit
 2023-10-03T17:17:34.911+01:00  INFO 35536 --- [  restartedMain] com.cbfacademy.apiassessment.App         : Started App in 0.643 seconds (process running for 0.786)
 ```
 
-Open your browser and navigate to `http://localhost:8080`.
+Open your browser and navigate to `htgittp://localhost:8081`.
 
 ## **Deliverables**
 

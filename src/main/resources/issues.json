@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "Bug in Application",
+    "description": "Application crashes on startup",
+    "status": "PENDING",
+    "assignedTo": {
+      "id": 20,
+      "firstname": "Isabella",
+      "lastname": "Turner",
+      "email": "isabellat@example.com",
+      "department": "WEALTH_MANAGEMENT"
+    },
+    "createdBy": {
+      "id": 2,
+      "firstname": "Alice",
+      "lastname": "Smith",
+      "email": "alicesmith@example.com",
+      "department": "GROUP_FUNCTIONS"
+    }
+  },
+  {
+    "id": 2,
+    "title": "Feature Request",
+    "description": "Add a new feature to the application",
+    "status": "IN_PROGRESS",
+    "assignedTo": {
+      "id": 3,
+      "firstname": "Bob",
+      "lastname": "Johnson",
+      "email": "bobjohnson@example.com",
+      "department": "GROUP_FUNCTIONS"
+    },
+    "createdBy": {
+      "id": 4,
+      "firstname": "Charlie",
+      "lastname": "Brown",
+      "email": "charliebrown@example.com",
+      "department": "INVESTMENT_BANKING"
+    }
+  },
+  {
+    "id": 3,
+    "title": "Data Import Issue",
+    "description": "Unable to import data into the system",
+    "status": "COMPLETE",
+    "assignedTo": {
+      "id": 5,
+      "firstname": "Eva",
+      "lastname": "Williams",
+      "email": "evawilliams@example.com",
+      "department": "ASSET_MANAGEMENT"
+    },
+    "createdBy": {
+      "id": 6,
+      "firstname": "David",
+      "lastname": "Miller",
+      "email": "davidmiller@example.com",
+      "department": "WEALTH_MANAGEMENT"
+    }
+  },
+  {
+    "id": 4,
+    "title": "Data Leak in Reporting",
+    "description": "Warning messages when working on reporting that will not go away",
+    "status": "COMPLETE",
+    "assignedTo": {
+      "id": 20,
+      "firstname": "Isabella",
+      "lastname": "Turner",
+      "email": "isabellat@example.com",
+      "department": "WEALTH_MANAGEMENT"
+    },
+    "createdBy": {
+      "id": 21,
+      "firstname": "Sam",
+      "lastname": "Smith",
+      "email": "ssmith@example.com",
+      "department": "PRIVATE_CORPORATE"
+    }
+  },
+  {
+    "id": 5,
+    "title": "The Server Crashed",
+    "description": "The server crashed in the department",
+    "status": "PENDING",
+    "assignedTo": {
+      "id": 15,
+      "firstname": "Michael",
+      "lastname": "Smithson",
+      "email": "mikes@example.com",
+      "department": "INVESTMENT_BANKING"
+    },
+    "createdBy": {
+      "id": 14,
+      "firstname": "Olivia",
+      "lastname": "Harrison",
+      "email": "oliviah@example.com",
+      "department": "GROUP_FUNCTIONS"
+    }
+  },
+  {
+    "id": 6,
+    "title": "Application Not Running",
+    "description": "Application crashes on startup",
+    "status": "IN_PROGRESS",
+    "assignedTo": {
+      "id": 10,
+      "firstname": "Johnson",
+      "lastname": "Brown",
+      "email": "jbrown@example.com",
+      "department": "GROUP_FUNCTIONS"
+    },
+    "createdBy": {
+      "id": 23,
+      "firstname": "Alice",
+      "lastname": "Wonderland",
+      "email": "awonder@example.com",
+      "department": "ASSET_MANAGEMENT"
+    }
+  }
+]
